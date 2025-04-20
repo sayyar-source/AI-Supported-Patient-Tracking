@@ -6,4 +6,5 @@ public interface IAuthService
 {
     Task<Result<LoginResponse>> LoginAsync(LoginRequest request);
     Task<Result<string>> RegisterAsync(string email, string password);
+    Task SignOutAsync();
 }

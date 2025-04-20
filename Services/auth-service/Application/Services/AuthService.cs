@@ -79,7 +79,11 @@ public class AuthService : IAuthService
             return Result<string>.Failure("An unexpected error occurred during registration.");
         }
     }
-
+    public Task SignOutAsync()
+    {
+        // For stateless JWT, signout is client-side (remove token).
+        return Task.CompletedTask;
+    }
     private string GenerateJwtToken(User user)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
