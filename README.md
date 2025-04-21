@@ -84,7 +84,7 @@ The **AI-Supported Patient Tracking Platform (Lite)** is a streamlined clinical 
 
 - Submits data via a POST request to the backend.
 
-# **Technical Support
+ # **Technical Support**
 
 **Frontend**
 
@@ -111,3 +111,52 @@ The **AI-Supported Patient Tracking Platform (Lite)** is a streamlined clinical 
 
 **Database**
 - Uses **MSSQL** as the RDBMS.
+
+# **Setup Instructions**
+
+**Prerequisites**
+
+- **Node.js** (v20+): For Angular development.
+
+- **.NET SDK (9+)**: For backend development.
+
+- **MSSQL**: For the database.
+
+- **Docker** (optional): For containerized deployment.
+
+- **Git**: For version control.
+Setup Instructions
+
+Prerequisites
+
+
+
+
+
+Node.js (v20+): For Angular development.
+
+
+
+.NET SDK (9+): For backend development.
+
+
+
+PostgreSQL or MSSQL: For the database.
+
+
+
+Docker (optional): For containerized deployment.
+
+
+
+Git: For version control.
+
+**Installation**
+
+1. **Clone the Repository**
+  - git clone <repository-url>
+  - cd AI-Supported-Patient-Tracking
+2. **Frontend Setup**
+  - cd frontend
+  - npm install
+  - ng serve
