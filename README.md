@@ -160,3 +160,26 @@ Git: For version control.
   - cd frontend
   - npm install
   - ng serve
+Access the app at http://localhost:4200.
+
+3. **Backend Setup**
+  - cd backend
+  - dotnet restore
+  - dotnet ef database update
+  - dotnet run
+The API runs at http://localhost:4000, http://localhost:5000, http://localhost:7000.
+
+4. **Database Setup**
+
+- For MSSQL:
+
+  - Update the connection string in appsettings.json.
+
+  - Apply migrations: dotnet ef database update.
+  
+5. **Swagger**
+ - Access API documentation at http://localhost:4000/swagger,  http://localhost:5000/swagger,  http://localhost:7000/swagger
+   
+6. **Docker** 
+ - Run the application:
+  - docker-compose up --build
