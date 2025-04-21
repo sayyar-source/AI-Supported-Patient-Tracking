@@ -2,17 +2,19 @@
 
 # **Overview**
 
-The **AI-Supported Patient Tracking Platform (Lite)** is a streamlined clinical monitoring system designed for managing patient records, viewing histories, and integrating AI-driven predictions. Built with a modern tech stack, it emphasizes security, scalability, and clean architecture.
+The **AI-Supported Patient Tracking Platform (Lite)** is a lightweight clinical monitoring system designed to manage patient records, view histories, and integrate AI-driven predictions. Built using **Domain-Driven Design (DDD)** and **microservices architecture**, it emphasizes modularity, scalability, and maintainability.
 
-# **Purpose**
+# **Architecture**
 
-**The system provides:**
+The platform follows **Domain-Driven Design (DDD)** principles, organizing the codebase around the core domain of clinical monitoring. It is implemented as a **microservices architecture**, with each service handling a specific bounded context:
 
-- Secure user authentication and authorization.
-  
-- Basic patient management (Create, Read, Update, Delete).
-- Historical patient record display.
-- AI-supported predictions via a mock API.
+ - **Auth Service**: Manages user authentication and authorization (JWT-based).
+
+ - **Patient Service**: Handles patient CRUD operations and historical records.
+
+ - **AI Prediction Service**: Provides mock AI predictions (static JSON).
+
+Each microservice communicates via RESTful APIs, ensuring loose coupling and independent deployment.
 
 # **Technologies Used**
 
@@ -26,7 +28,7 @@ The **AI-Supported Patient Tracking Platform (Lite)** is a streamlined clinical 
 
 - **JWT Authentication:** For protecting routes and API requests.
 
-**Backend**
+**Backend (Microservices)**
 
 - .NET 9 (ASP.NET Core Web API): For a robust RESTful API.
 
@@ -96,9 +98,16 @@ The **AI-Supported Patient Tracking Platform (Lite)** is a streamlined clinical 
 
 - Secures routes with **JWT**.
 
- **Backend**
+ **Backend (Microservices)**
 
 - Developed with **.NET 9+ (ASP.NET Core Web API)**.
+- Each microservice follows **DDD** principles:
+
+  - **Bounded Contexts**: Auth, Patient, and AI Prediction.
+
+  - **Aggregates**: User (Auth), Patient (Patient Service).
+
+  - **Repositories**: For data access within each service.
 
 - Manages data using **Entity Framework Core**.
 
