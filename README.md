@@ -84,3 +84,30 @@ The **AI-Supported Patient Tracking Platform (Lite)** is a streamlined clinical 
 
 - Submits data via a POST request to the backend.
 
+# **Technical Support
+
+**Frontend**
+
+- Built with **Angular 19+**.
+
+- Uses **Reactive Forms** for form management.
+
+- Leverages **HttpClient** for secure API calls.
+
+- Secures routes with **JWT**.
+
+ **Backend**
+
+- Developed with **.NET 9+ (ASP.NET Core Web API)**.
+
+- Manages data using **Entity Framework Core**.
+
+- Supports **CRUD operations** for patients.
+
+- Implements **JWT-based AAA** (Register, Sign-in, Sign-out).
+
+- Provides a mock **/api/prediction** endpoint with static JSON.
+
+
+**Database**
+- Uses **MSSQL** as the RDBMS.
