@@ -125,31 +125,6 @@ The **AI-Supported Patient Tracking Platform (Lite)** is a streamlined clinical 
 - **Docker** (optional): For containerized deployment.
 
 - **Git**: For version control.
-Setup Instructions
-
-Prerequisites
-
-
-
-
-
-Node.js (v20+): For Angular development.
-
-
-
-.NET SDK (9+): For backend development.
-
-
-
-PostgreSQL or MSSQL: For the database.
-
-
-
-Docker (optional): For containerized deployment.
-
-
-
-Git: For version control.
 
 **Installation**
 
@@ -183,3 +158,41 @@ The API runs at http://localhost:4000, http://localhost:5000, http://localhost:7
 6. **Docker** 
    - Run the application:
     - docker-compose up --build
+   
+# **API Endpoints**
+
+ - **POST /api/auth/register**: Register a new user.
+
+ - **POST /api/auth/signin**: Authenticate a user and return a JWT.
+
+ - **POST /api/auth/signout**: Sign out a user.
+
+ - **GET /api/patients**: List all patients.
+
+ - **GET /api/patients/{id}**: Get a patient by ID.
+
+ - **POST /api/patients**: Create a new patient.
+
+ - **DELETE /api/patients/{id}**: Delete a patient.
+
+ - **GET /prediction/api**: Mock AI prediction (static JSON).
+
+# **Running the Application**
+
+1. Start the backend (*dotnet run*).
+
+2. Start the frontend (*ng serve*).
+
+3. Navigate to http://localhost:4200.
+
+4. Log in to access patient management features.
+
+# **Evaluation Criteria**
+
+ - **Code Quality**: Clean, modular, and well-documented.
+
+ - **Architecture**: Effective integration of Angular and .NET Core.
+
+ - **Principles**: Adherence to SOLID, DRY, and other best practices.
+
+ - **Timeline**: Completion within the specified timeframe.
