@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers()
-    .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+    .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase);
 builder.Services.AddEndpointsApiExplorer(); // Enables minimal API support for Swagger
 builder.Services.AddSwaggerGen(c =>
 {
@@ -69,6 +69,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
     });
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 builder.Services.AddAuthorization();
 builder.Services.AddLogging(logging => logging.AddConsole());
 // Dependency Injection
@@ -77,6 +87,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 
 var app = builder.Build();
+app.UseCors();
 // Apply migrations on startup (optional for local dev, remove in production if using CI/CD migrations)
 if (app.Environment.IsDevelopment())
 {

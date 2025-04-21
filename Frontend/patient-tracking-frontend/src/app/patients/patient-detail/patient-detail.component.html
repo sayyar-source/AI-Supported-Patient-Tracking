@@ -1,0 +1,37 @@
+<div class="container" *ngIf="patient">
+    <h2>{{ patient.name }} {{ patient.surname }}</h2>
+    <div class="card">
+      <div class="card-body">
+        <h5>Patient Details</h5>
+        <p><strong>Birthdate:</strong> {{ patient.birthdate | date:'shortDate' }}</p>
+        <!-- <p><strong>Doctor Remarks:</strong> {{ patient.doctorremarks }}</p>-->
+        <h5>AI Prediction</h5>
+        <p *ngIf="prediction">
+          <strong>Result:</strong> {{ prediction.prediction }}<br>
+          <strong>Confidence:</strong> {{ prediction.confidence }}<br>
+       
+        </p>
+        
+        <!--
+        <h5>History</h5>
+            <table class="table" *ngIf="patient.history.length">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Diagnosis</th>
+              <th>Treatment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of patient.history">
+              <td>{{ record.visitdate | date:'shortDate' }}</td>
+              <td>{{ record.diagnosis }}</td>
+              <td>{{ record.treatment }}</td>
+            </tr>
+          </tbody>
+        </table>
+        -->
+    
+      </div>
+    </div>
+  </div>

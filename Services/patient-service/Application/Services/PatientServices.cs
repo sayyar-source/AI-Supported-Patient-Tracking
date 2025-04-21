@@ -86,7 +86,7 @@ public class PatientServices : IPatientService
             throw new UnauthorizedAccessException("JWT token is missing.");
 
         // Prepare HTTP request with JWT token
-        var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7001/api/prediction")
+        var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:7000/api/prediction")
         {
             Content = JsonContent.Create(new { PatientId = patientId, MedicalData = "sample-data" })
         };

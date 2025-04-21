@@ -43,7 +43,7 @@ public class PatientsController : ControllerBase
         await _patientService.DeletePatientAsync(id);
         return NoContent();
     }
-    [HttpGet("{id}/prediction")]
+    [HttpGet("prediction/{id}")]
     public async Task<IActionResult> GetPrediction(Guid id)
     {
         var prediction = await _patientService.GetAIPredictionAsync(id);
