@@ -1,10 +1,15 @@
 ﻿using Application.DTOs;
+using Application.Interfaces;
 using Application.Services;
+using Auth.Application.Interfaces;
+using Domain.Commons;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Presentation.Controllers;
 
 namespace Auth.Tests;
 
@@ -118,5 +123,25 @@ public class AuthServiceTests
                 It.IsAny<Exception>(),
                 It.IsAny<Func<It.IsAnyType, Exception, string>>()),
             Times.Once());
+    }
+
+    [Fact]
+    public async Task ForgotPassword_ReturnsOk_WhenRequestIsValid()
+    {
+        // Arrange
+        var mockAuthService = new Mock<IAuthService>();
+        var mockLogService = new Mock<IAuthLogService>();
+        var controller = new AuthController(mockAuthService.Object, mockLogService.Object);
+
+        var request = new ForgotPasswordRequest { Email = "test@example.com" };
+        mockAuthService.Setup(s => s.ForgotPasswordAsync(request.Email))
+            .ReturnsAsync(Result<string>.Success("If an account with that email exists, a password reset link has been sent."));
+
+        // Act
+        var result = await controller.ForgotPassword(request);
+
+        // Assert
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        Assert.NotNull(okResult.Value);
     }
 }

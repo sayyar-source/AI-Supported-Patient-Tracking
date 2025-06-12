@@ -12,10 +12,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["auth-service/AuthAPI/Auth.Presentation.csproj", "auth-service/AuthAPI/"]
-COPY ["auth-service/Application/Auth.Application.csproj", "auth-service/Application/"]
-COPY ["auth-service/Domain/Auth.Domain.csproj", "auth-service/Domain/"]
-COPY ["auth-service/Infrastructure/Auth.Infrastructure.csproj", "auth-service/Infrastructure/"]
+COPY ../../auth-service/AuthAPI/Auth.Presentation.csproj auth-service/AuthAPI/
+COPY ../../auth-service/Application/Auth.Application.csproj auth-service/Application/
+COPY ../../auth-service/Domain/Auth.Domain.csproj auth-service/Domain/
+COPY ../../auth-service/Infrastructure/Auth.Infrastructure.csproj auth-service/Infrastructure/
+
 RUN dotnet restore "./auth-service/AuthAPI/Auth.Presentation.csproj"
 COPY . .
 WORKDIR "/src/auth-service/AuthAPI"

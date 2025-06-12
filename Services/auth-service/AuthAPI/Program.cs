@@ -1,5 +1,7 @@
 using Application.Interfaces;
 using Application.Services;
+using Auth.Application.Interfaces;
+using Auth.Application.Services;
 using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data;
@@ -8,14 +10,22 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+// Set up Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase);
 builder.Services.AddEndpointsApiExplorer(); // Enables minimal API support for Swagger
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth Service API", Version = "v1" });
@@ -84,30 +94,28 @@ builder.Services.AddLogging(logging => logging.AddConsole());
 // Dependency Injection
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+builder.Services.AddScoped<IAuthLogService, AuthLogService>();
 
 var app = builder.Build();
 app.UseCors();
 // Apply migrations on startup (optional for local dev, remove in production if using CI/CD migrations)
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await dbContext.Database.MigrateAsync();
-}
 // Seed data for Users
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    if (!context.Users.Any())
-    {
-        context.Users.AddRange(
-            new User("user1@gmail.com", "123"),
-            new User("user2@gmail.com", "123")
-        );
-        await context.SaveChangesAsync();
-    }
-}
+// This is optional and should be removed in production environments or replaced with a proper seeding strategy.
+    if (!dbContext.Users.Any())
+        {
+            dbContext.Users.AddRange(
+                new User("user1@gmail.com", "123"),
+                new User("user2@gmail.com", "123")
+            );
+            await dbContext.SaveChangesAsync();
+        }
+//}
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -117,5 +125,5 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
+app.MapGet("/", () => "Hello World!");
 app.Run();

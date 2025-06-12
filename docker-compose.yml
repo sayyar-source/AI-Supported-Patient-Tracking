@@ -1,0 +1,75 @@
+﻿version: '3.8'
+
+services:
+  authapi:
+    build:
+      context: ./Services
+      dockerfile: /auth-service/AuthAPI/Dockerfile
+    ports:
+      - "5001:8080"
+    depends_on:
+      - elasticsearch
+      - sqlserver
+
+  patientapi:
+    build:
+      context: ./Services
+      dockerfile: /patient-service/PatientAPI/Dockerfile
+    ports:
+      - "5002:8080"
+    depends_on:
+      - elasticsearch
+      - postgres
+
+  predictionapi:
+    build:
+     context: ./Services
+     dockerfile: /prediction-service/PredictionAPI/Dockerfile
+    ports:
+      - "5003:8080"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.13.0
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    ports:
+      - "11433:1433"
+    environment:
+      SA_PASSWORD: "Sayyar!Passw0rd"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    restart: always
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    ports:
+      - "15432:5432"
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "Sayyar!Passw0rd"
+      POSTGRES_DB: "patientdb"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  sqlserver_data:
+  postgres_data:
+  esdata:

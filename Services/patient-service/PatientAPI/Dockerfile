@@ -12,10 +12,13 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/patient-service/Patient.API/Patient.API.csproj", "Services/patient-service/Patient.API/"]
-RUN dotnet restore "./Services/patient-service/Patient.API/Patient.API.csproj"
+COPY ["patient-service/PatientAPI/Patient.API.csproj", "patient-service/PatientAPI/"]
+COPY ["patient-service/Application/Patient.Application.csproj", "patient-service/Application/"]
+COPY ["patient-service/Domain/Patient.Domain.csproj", "patient-service/Domain/"]
+COPY ["patient-service/Infrastructure/Patient.Infrastructure.csproj", "patient-service/Infrastructure/"]
+RUN dotnet restore "./patient-service/PatientAPI/Patient.API.csproj"
 COPY . .
-WORKDIR "/src/Services/patient-service/Patient.API"
+WORKDIR "/src/patient-service/PatientAPI"
 RUN dotnet build "./Patient.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

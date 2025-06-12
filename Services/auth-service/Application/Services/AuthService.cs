@@ -79,6 +79,41 @@ public class AuthService : IAuthService
             return Result<string>.Failure("An unexpected error occurred during registration.");
         }
     }
+
+
+    public async Task<Result<string>> ForgotPasswordAsync(string email)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return Result<string>.Failure("Email is required.");
+            }
+
+            var user = await _userRepository.GetByEmailAsync(email);
+            if (user == null)
+            {
+                // Return success even if user doesn't exist for security
+                _logger.LogInformation("Password reset requested for non-existent email: {Email}", email);
+                return Result<string>.Success("If an account exists with this email, you will receive password reset instructions.");
+            }
+
+            // Generate password reset token
+            var resetToken = GenerateJwtToken(user);
+            
+            // TODO: Send email with reset token
+            // This would typically integrate with your email service
+            _logger.LogInformation("Password reset token generated for user {Email}", email);
+
+            return Result<string>.Success("If an account exists with this email, you will receive password reset instructions.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during forgot password process for {Email}", email);
+            return Result<string>.Failure("An error occurred while processing your request.");
+        }
+    }
+
     public Task SignOutAsync()
     {
         // For stateless JWT, signout is client-side (remove token).

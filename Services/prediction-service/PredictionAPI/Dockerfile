@@ -12,10 +12,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/prediction-service/Prediction.API/Prediction.API.csproj", "Services/prediction-service/Prediction.API/"]
-RUN dotnet restore "./Services/prediction-service/Prediction.API/Prediction.API.csproj"
+COPY ["prediction-service/PredictionAPI/Prediction.API.csproj", "prediction-service/PredictionAPI/"]
+RUN dotnet restore "prediction-service/PredictionAPI/Prediction.API.csproj"
 COPY . .
-WORKDIR "/src/Services/prediction-service/Prediction.API"
+WORKDIR "/src/prediction-service/PredictionAPI"
 RUN dotnet build "./Prediction.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
